@@ -1,0 +1,16 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
+  "/features/analysis/page": "/features/analysis",
+  "/features/chatbot/page": "/features/chatbot",
+  "/features/deepsearch/page": "/features/deepsearch",
+  "/features/optimizer/page": "/features/optimizer",
+  "/login/email/page": "/login/email",
+  "/jurisdiction/page": "/jurisdiction",
+  "/login/page": "/login",
+  "/page": "/",
+  "/dashboard/deep-search/page": "/dashboard/deep-search",
+  "/dashboard/optimization-assistant/page": "/dashboard/optimization-assistant",
+  "/dashboard/legal-chatbot/page": "/dashboard/legal-chatbot",
+  "/dashboard/page": "/dashboard"
+}

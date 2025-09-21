@@ -1,6 +1,7 @@
 
 "use client";
 
+import { Suspense } from 'react';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button } from '@/components/ui/button';
@@ -43,7 +44,7 @@ interface Jurisdiction {
   name: string;
 }
 
-export default function LegalChatbotPage() {
+function LegalChatbot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -327,5 +328,14 @@ export default function LegalChatbotPage() {
         </AlertDialogContent>
      </AlertDialog>
     </main>
+  );
+}
+
+
+export default function LegalChatbotPage() {
+  return (
+    <Suspense>
+      <LegalChatbot />
+    </Suspense>
   );
 }
