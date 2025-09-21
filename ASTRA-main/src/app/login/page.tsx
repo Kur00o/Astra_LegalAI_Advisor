@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,9 +10,16 @@ import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/logo';
 import { Mail, Phone } from 'lucide-react';
-import { signInWithGoogle, setupRecaptcha, signInWithPhone, auth } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
 import { addUserToDatabase } from '@/lib/database';
-import { RecaptchaVerifier, ConfirmationResult, UserCredential } from 'firebase/auth';
+import { 
+  GoogleAuthProvider, 
+  signInWithPopup, 
+  RecaptchaVerifier, 
+  signInWithPhoneNumber,
+  ConfirmationResult,
+  UserCredential
+} from 'firebase/auth';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,19 +27,11 @@ export default function LoginPage() {
   const [otp, setOtp] = useState('');
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const [showOtpInput, setShowOtpInput] = useState(false);
-  const [recaptchaVerifier, setRecaptchaVerifier] = useState<RecaptchaVerifier | null>(null);
-
-  useEffect(() => {
-    // This effect will run once on mount to set up the reCAPTCHA verifier.
-    const verifier = setupRecaptcha('recaptcha-container');
-    if (verifier) {
-      setRecaptchaVerifier(verifier);
-    }
-  }, []);
 
   const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
     try {
-      const userCredential: UserCredential = await signInWithGoogle();
+      const userCredential: UserCredential = await signInWithPopup(auth, provider);
       await addUserToDatabase(userCredential.user);
       router.push('/jurisdiction');
     } catch (error) {
@@ -44,10 +43,26 @@ export default function LoginPage() {
       router.push('/login/email');
   }
 
+  const setupRecaptcha = () => {
+    if (typeof window !== 'undefined' && !(window as any).recaptchaVerifier) {
+      (window as any).recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        'size': 'invisible',
+        'callback': (response: any) => {
+          console.log("reCAPTCHA solved");
+        },
+        'expired-callback': () => {
+          console.log("reCAPTCHA expired");
+        }
+      });
+    }
+    return (window as any).recaptchaVerifier;
+  }
+
   const handlePhoneSignIn = async () => {
+    const recaptchaVerifier = setupRecaptcha();
     if (recaptchaVerifier) {
       try {
-        const result: ConfirmationResult = await signInWithPhone(phone, recaptchaVerifier);
+        const result: ConfirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
         setConfirmationResult(result);
         setShowOtpInput(true);
       } catch (error) {
