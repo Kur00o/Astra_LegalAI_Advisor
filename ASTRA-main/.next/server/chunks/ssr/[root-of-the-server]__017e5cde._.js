@@ -527,12 +527,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$firebase$2
 ;
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    apiKey: ("TURBOPACK compile-time value", "AIzaSyBAMr0BnZr4L4KcZNphCIdFjSMon1GJagI"),
+    authDomain: ("TURBOPACK compile-time value", "astra-b3592.firebaseapp.com"),
+    projectId: ("TURBOPACK compile-time value", "astra-b3592"),
+    storageBucket: ("TURBOPACK compile-time value", "astra-b3592.appspot.com"),
+    messagingSenderId: ("TURBOPACK compile-time value", "954855225931"),
+    appId: ("TURBOPACK compile-time value", "1:954855225931:web:724f79a1a1860951a52bce"),
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL
 };
