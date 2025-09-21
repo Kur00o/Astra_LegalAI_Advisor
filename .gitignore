@@ -1,0 +1,7 @@
+
+echo "node_modules/" >> .gitignore
+git add .gitignore
+git commit -m "Ignore node_modules"
+git push origin main
+node_modules/
+node_modules/
