@@ -14,6 +14,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useRouter } from 'next/navigation';
+import { maskSensitiveData } from '@/lib/utils';
 
 interface AssistantMessage {
     role: 'user' | 'assistant';
@@ -91,7 +92,9 @@ export default function DashboardPage() {
   });
 
   const handleAnalyze = async (text: string) => {
-    if (!text.trim()) {
+    // DATA MASKING: Sensitive info is masked before analysis
+    const maskedText = maskSensitiveData(text);
+    if (!maskedText.trim()) {
       setError('The document is empty.');
       return;
     }
@@ -104,7 +107,7 @@ export default function DashboardPage() {
     setAnalysisResult(null);
 
     try {
-        const analysis = await analyzeLegalClauses({ documentText: text, jurisdiction: jurisdiction.name });
+        const analysis = await analyzeLegalClauses({ documentText: maskedText, jurisdiction: jurisdiction.name });
         setAnalysisResult(analysis);
 
     } catch (e) {
